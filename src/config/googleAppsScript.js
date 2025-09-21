@@ -1,14 +1,23 @@
 // Google Apps Script Configuration
 // 
-// INSTRUCTIONS:
-// 1. Deploy your Google Apps Script as a web app
-// 2. Copy the web app URL from the deployment
-// 3. Replace the placeholder URL below with your actual Google Apps Script web app URL
+// IMPORTANT: The current URL is a library URL and will not work for form submissions.
 // 
-// Example URL format: https://script.google.com/macros/s/AKfycbzXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/exec
+// TO FIX THE "Failed to fetch" ERROR:
+// 1. Go to https://script.google.com
+// 2. Create a new Google Apps Script project
+// 3. Add the Google Apps Script code (see google-apps-script-example.js in project root)
+// 4. Deploy the script as a web app:
+//    - Click "Deploy" > "New deployment"
+//    - Choose "Web app" as the type
+//    - Set execute as "Me" and access to "Anyone"
+//    - Click "Deploy" and copy the web app URL
+// 5. Replace the WEB_APP_URL below with your actual deployment URL
+// 
+// Correct URL format: https://script.google.com/macros/s/AKfycbzXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/exec
+// Current URL is: https://script.google.com/macros/library/... (LIBRARY URL - WRONG!)
 
 export const GOOGLE_APPS_SCRIPT_CONFIG = {
-  // Replace this with your actual Google Apps Script Web App URL
+  // REPLACE THIS with your actual Google Apps Script Web App URL from deployment
   WEB_APP_URL: 'https://script.google.com/macros/library/d/1Wn1bFNJbODXI9-BMnQV3_UxJsLGSDMSOC5m0n_SaWNPwOS4cU1N-eIAx/3',
   
   // Optional: Add other configuration options

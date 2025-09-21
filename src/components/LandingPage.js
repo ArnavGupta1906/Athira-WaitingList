@@ -1,93 +1,302 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { submitToGoogleSheets, validateForm as validateFormData } from '../services/googleSheetsService'
 
 const LandingPage = () => {
-  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    description: ''
+  })
+  const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showWelcome, setShowWelcome] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
-  const handleRegisterInterest = () => {
-    navigate('/register')
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+
+    // Clear errors when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }))
+    }
+    
+    // Clear submit error when user makes changes
+    if (submitError) {
+      setSubmitError('')
+    }
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      {/* Header */}
-      <header className="w-full py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">A</span>
-            </div>
-            <span className="ml-3 text-2xl font-bold text-gray-900">Athira</span>
-          </div>
-        </div>
-      </header>
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+    // Validate form using the service function
+    const validationErrors = validateFormData(formData)
+    setErrors(validationErrors)
+    
+    // If there are validation errors, don't submit
+    if (Object.keys(validationErrors).length > 0) {
+      return
+    }
 
-      {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    try {
+      const result = await submitToGoogleSheets(formData)
+      
+      if (result.success) {
+        setShowWelcome(true)
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          description: ''
+        })
+      } else {
+        setSubmitError(result.error || 'Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      setSubmitError('Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleBackToForm = () => {
+    setShowWelcome(false)
+  }
+
+  // Show welcome page after successful registration
+  if (showWelcome) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-slate-900 to-purple-900 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="space-y-8">
-            {/* Hero Section */}
+            {/* Success Icon */}
+            <div className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-8">
+              <svg className="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+
+            {/* Welcome Message */}
             <div className="space-y-6">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
-                AI-Powered
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                  Microtutoring
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                Welcome to
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">
+                  Athira
                 </span>
               </h1>
               
-              <p className="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Personalized learning experiences that adapt to your pace, 
-                helping you master concepts through intelligent tutoring sessions.
+              <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Thank you for registering your interest! We're excited to have you join our community of learners. 
+                We'll be in touch soon with updates about your AI-powered learning journey.
               </p>
             </div>
 
-            {/* Features */}
-            <div className="grid md:grid-cols-3 gap-8 mt-16">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+            {/* Additional Info */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-lg max-w-2xl mx-auto">
+              <h3 className="text-2xl font-semibold text-white mb-4">What's Next?</h3>
+              <div className="space-y-4 text-left">
+                <div className="flex items-start">
+                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
+                    <span className="text-green-400 text-sm font-bold">1</span>
+                  </div>
+                  <p className="text-gray-300">We'll send you early access to our beta platform</p>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Instant Feedback</h3>
-                <p className="text-gray-600">Get immediate insights and corrections to accelerate your learning.</p>
-              </div>
-
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
+                <div className="flex items-start">
+                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
+                    <span className="text-green-400 text-sm font-bold">2</span>
+                  </div>
+                  <p className="text-gray-300">Get personalized learning recommendations</p>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Adaptive Learning</h3>
-                <p className="text-gray-600">AI that understands your learning style and adjusts accordingly.</p>
-              </div>
-
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
+                <div className="flex items-start">
+                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
+                    <span className="text-green-400 text-sm font-bold">3</span>
+                  </div>
+                  <p className="text-gray-300">Start your AI-powered microtutoring journey</p>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Comprehensive Topics</h3>
-                <p className="text-gray-600">From math to science, covering all subjects you need to excel.</p>
               </div>
             </div>
 
-            {/* CTA Section */}
-            <div className="mt-16 space-y-6">
-              <p className="text-lg text-gray-700">
-                Ready to transform your learning experience?
+            <button
+              onClick={handleBackToForm}
+              className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-white/10 rounded-lg hover:bg-white/20 transition-colors duration-200 border border-white/30"
+            >
+              ← Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-slate-900 to-purple-900 flex flex-col">
+      {/* Main Content - Registration Form */}
+      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            {/* Logo Section */}
+            <div className="mb-8">
+              <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-yellow-400/20 rounded-2xl border border-white/20 backdrop-blur-sm flex items-center justify-center">
+                <div className="text-center">
+                  {/* Athira Logo - Stylized A */}
+                  <div className="w-16 h-16 mx-auto mb-2 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-2xl">A</span>
+                  </div>
+                  <div className="text-xs text-gray-400 font-medium tracking-wider">ATHIRA</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Brand Name and Slogan */}
+            <div className="mb-12">
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 mb-4">
+                Athira
+              </h1>
+              <p className="text-lg sm:text-xl text-gray-400 font-light italic">
+                Because "due tomorrow" means "help tonight"
               </p>
-              <button
-                onClick={handleRegisterInterest}
-                className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
-              >
-                Register Interest
-                <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
+            </div>
+
+            {/* Description */}
+            <div className="mb-8">
+              <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-6">
+                AI-powered microtutoring that adapts to your pace, 
+                helping you master concepts through intelligent learning sessions.
+              </p>
+              
+              <p className="text-lg text-gray-400">
+                Ready to transform your learning experience? Register your interest below!
+              </p>
+            </div>
+          </div>
+
+          <div className="max-w-md mx-auto">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-200 mb-2">
+                      First Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 bg-white/10 text-white placeholder-gray-400 ${
+                        errors.firstName ? 'border-red-400 bg-red-500/20' : 'border-white/30'
+                      }`}
+                      placeholder="John"
+                    />
+                    {errors.firstName && (
+                      <p className="mt-1 text-sm text-red-400">{errors.firstName}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-200 mb-2">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 bg-white/10 text-white placeholder-gray-400 ${
+                        errors.lastName ? 'border-red-400 bg-red-500/20' : 'border-white/30'
+                      }`}
+                      placeholder="Doe"
+                    />
+                    {errors.lastName && (
+                      <p className="mt-1 text-sm text-red-400">{errors.lastName}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 bg-white/10 text-white placeholder-gray-400 ${
+                    errors.email ? 'border-red-400 bg-red-500/20' : 'border-white/30'
+                  }`}
+                  placeholder="john.doe@example.com"
+                />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-400">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-200 mb-2">
+                  Tell us about your learning
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  rows={4}
+                  className="w-full px-4 py-3 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 resize-none bg-white/10 text-white placeholder-gray-400"
+                  placeholder="What subjects are you interested in? What are your learning goals?"
+                />
+                <p className="mt-1 text-sm text-gray-400">Optional - Help us understand your learning needs</p>
+                </div>
+
+                {/* Display submission error if any */}
+                {submitError && (
+                  <div className="bg-red-500/20 border border-red-400 rounded-lg p-4">
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-sm text-red-200">{submitError}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-600 hover:via-pink-600 hover:to-yellow-500 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Submitting...
+                    </div>
+                  ) : (
+                    'Register Interest'
+                  )}
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -95,7 +304,7 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center text-gray-500">
+        <div className="max-w-7xl mx-auto text-center text-gray-400">
           <p>&copy; 2024 Athira. Revolutionizing education through AI.</p>
         </div>
       </footer>
