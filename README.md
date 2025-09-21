@@ -1,24 +1,4 @@
-# Athira Landing Page
 
-A React-based landing page for Athira, an AI-powered microtutoring platform.
-
-## Features
-
-- **Landing Page**: Beautiful, responsive landing page with Athira branding
-- **Registration Form**: Interest registration form with validation
-- **Backend Integration**: Google Sheets integration via Google Apps Script
-- **Form Validation**: Client-side validation for required fields and email format
-
-## Tech Stack
-
-- **Frontend**: React 18, Tailwind CSS, React Router
-- **Backend**: Google Apps Script + Google Sheets
-- **Styling**: Tailwind CSS with custom gradient designs
-
-## Setup Instructions
-
-### 1. Install Dependencies
-```bash
 npm install
 ```
 
