@@ -27,7 +27,6 @@
 1. Click "Deploy" → "New deployment"
 2. Click the gear icon next to "Type" and select "Web app"
 3. Fill in the deployment settings:
-   - **Description**: "Athira Waitlist API"
    - **Execute as**: "Me (your email)"
    - **Who has access**: "Anyone"
 4. Click "Deploy"
