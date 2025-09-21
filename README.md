@@ -83,4 +83,4 @@ The design uses a modern gradient theme with blue and indigo colors. You can cus
 
 ## Browser Support
 
-Modern browsers supporting ES6+ and CSS Grid/Flexbox.
+Modern browsers supporting ES6+ and CSS Grid/Flexbox.# Email configuration updated
