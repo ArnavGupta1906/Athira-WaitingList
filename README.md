@@ -8,7 +8,6 @@ A React-based landing page for Athira, an AI-powered microtutoring platform.
 - **Registration Form**: Interest registration form with validation
 - **Backend Integration**: Google Sheets integration via Google Apps Script
 - **Form Validation**: Client-side validation for required fields and email format
-- **Success Handling**: Success message and automatic redirect after registration
 
 ## Tech Stack
 
