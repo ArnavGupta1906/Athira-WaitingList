@@ -36,6 +36,8 @@ const LandingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log('📝 Form submission started')
+    console.log('📊 Form data:', formData)
     
     // Validate form using the service function
     const validationErrors = validateFormData(formData)
@@ -43,16 +45,21 @@ const LandingPage = () => {
     
     // If there are validation errors, don't submit
     if (Object.keys(validationErrors).length > 0) {
+      console.log('❌ Form validation failed:', validationErrors)
       return
     }
 
+    console.log('✅ Form validation passed, submitting...')
     setIsSubmitting(true)
     setSubmitError('')
 
     try {
+      console.log('🚀 Calling submitToGoogleSheets...')
       const result = await submitToGoogleSheets(formData)
+      console.log('📡 Submission result:', result)
       
       if (result.success) {
+        console.log('🎉 Submission successful! Showing welcome page.')
         setShowWelcome(true)
         setFormData({
           firstName: '',
@@ -61,12 +68,14 @@ const LandingPage = () => {
           description: ''
         })
       } else {
+        console.error('❌ Submission failed:', result.error)
         setSubmitError(result.error || 'Something went wrong. Please try again.')
       }
     } catch (error) {
-      console.error('Submission error:', error)
+      console.error('💥 Submission error:', error)
       setSubmitError('Something went wrong. Please try again.')
     } finally {
+      console.log('🏁 Form submission process completed')
       setIsSubmitting(false)
     }
   }
@@ -136,6 +145,21 @@ const LandingPage = () => {
             </button>
           </div>
         </div>
+        
+        {/* Footer */}
+        <footer className="py-6 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-gray-400 text-sm">
+            <p>&copy; Athira, Inc. 2025</p>
+            <a 
+              href="/privacy-policy.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors duration-200"
+            >
+              Privacy Policy
+            </a>
+          </div>
+        </footer>
       </div>
     )
   }
@@ -148,73 +172,65 @@ const LandingPage = () => {
           <div className="text-center mb-12">
             {/* Logo Section */}
             <div className="mb-8">
-              <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-yellow-400/20 rounded-2xl border border-white/20 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-4 bg-slate-800 rounded-lg border border-slate-700 flex items-center justify-center">
                 <div className="text-center">
                   {/* Athira Logo - Stylized A with gradient lines */}
-                  <div className="w-16 h-16 mx-auto mb-2 relative">
+                  <div className="w-12 h-12 mx-auto mb-1 relative">
                     {/* Multi-line gradient A logo */}
-                    <svg width="64" height="64" viewBox="0 0 64 64" className="absolute inset-0">
+                    <svg width="48" height="48" viewBox="0 0 48 48" className="absolute inset-0">
                       {/* Left leg of A */}
-                      <path d="M12 50 L20 20 L28 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M16 50 L22 20 L30 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M20 50 L24 20 L32 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M9 37.5 L15 15 L21 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M12 37.5 L16.5 15 L22.5 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M15 37.5 L18 15 L24 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                       
                       {/* Right leg of A */}
-                      <path d="M52 50 L44 20 L36 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M48 50 L42 20 L34 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M44 50 L40 20 L32 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M39 37.5 L33 15 L27 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M36 37.5 L31.5 15 L25.5 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M33 37.5 L30 15 L24 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                       
                       {/* Top of A - curved meeting point */}
-                      <path d="M32 20 Q36 12 40 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M32 20 Q34 12 36 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M32 20 Q35 12 38 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M24 15 Q27 9 30 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M24 15 Q25.5 9 27 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M24 15 Q26.25 9 28.5 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                       
                       <defs>
                         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#8B5CF6" />
-                          <stop offset="25%" stopColor="#EC4899" />
+                          <stop offset="0%" stopColor="#EC4899" />
+                          <stop offset="25%" stopColor="#F97316" />
                           <stop offset="50%" stopColor="#F59E0B" />
-                          <stop offset="75%" stopColor="#F97316" />
-                          <stop offset="100%" stopColor="#EAB308" />
+                          <stop offset="75%" stopColor="#EAB308" />
+                          <stop offset="100%" stopColor="#F59E0B" />
                         </linearGradient>
                       </defs>
                     </svg>
                   </div>
-                  <div className="text-xs text-gray-400 font-medium tracking-wider">ATHIRA</div>
+                  <div className="text-xs text-white font-medium tracking-wider">ATHIRA</div>
                 </div>
               </div>
             </div>
 
             {/* Brand Name and Slogan */}
-            <div className="mb-12">
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 mb-4">
+            <div className="mb-8">
+              <p className="text-sm text-gray-300 font-medium tracking-wide uppercase mb-2">
+                Because "due tomorrow" means "help tonight"
+              </p>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-orange-400 to-yellow-400 mb-4">
                 Athira
               </h1>
-              <p className="text-lg sm:text-xl text-gray-400 font-light italic">
+              <p className="text-lg text-gray-400 font-light italic">
                 Because "due tomorrow" means "help tonight"
               </p>
             </div>
 
-            {/* Description */}
-            <div className="mb-8">
-              <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-6">
-                AI-powered microtutoring that adapts to your pace, 
-                helping you master concepts through intelligent learning sessions.
-              </p>
-              
-              <p className="text-lg text-gray-400">
-                Ready to transform your learning experience? Register your interest below!
-              </p>
-            </div>
           </div>
 
           <div className="max-w-md mx-auto">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-xl p-8 border border-slate-700">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-200 mb-2">
-                      First Name *
+                    <label htmlFor="firstName" className="block text-sm font-medium text-white mb-2">
+                      First name
                     </label>
                     <input
                       type="text"
@@ -222,10 +238,10 @@ const LandingPage = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 bg-white/10 text-white placeholder-gray-400 ${
-                        errors.firstName ? 'border-red-400 bg-red-500/20' : 'border-white/30'
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 bg-slate-700/50 text-white placeholder-gray-400 ${
+                        errors.firstName ? 'border-red-400 bg-red-500/20' : 'border-slate-600'
                       }`}
-                      placeholder="John"
+                      placeholder="First name"
                     />
                     {errors.firstName && (
                       <p className="mt-1 text-sm text-red-400">{errors.firstName}</p>
@@ -233,8 +249,8 @@ const LandingPage = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-200 mb-2">
-                      Last Name *
+                    <label htmlFor="lastName" className="block text-sm font-medium text-white mb-2">
+                      Last name
                     </label>
                     <input
                       type="text"
@@ -242,10 +258,10 @@ const LandingPage = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 bg-white/10 text-white placeholder-gray-400 ${
-                        errors.lastName ? 'border-red-400 bg-red-500/20' : 'border-white/30'
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 bg-slate-700/50 text-white placeholder-gray-400 ${
+                        errors.lastName ? 'border-red-400 bg-red-500/20' : 'border-slate-600'
                       }`}
-                      placeholder="Doe"
+                      placeholder="Last name"
                     />
                     {errors.lastName && (
                       <p className="mt-1 text-sm text-red-400">{errors.lastName}</p>
@@ -254,8 +270,8 @@ const LandingPage = () => {
                 </div>
 
                 <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
-                  Email Address *
+                <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+                  Email address
                 </label>
                 <input
                   type="email"
@@ -263,10 +279,10 @@ const LandingPage = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 bg-white/10 text-white placeholder-gray-400 ${
-                    errors.email ? 'border-red-400 bg-red-500/20' : 'border-white/30'
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 bg-slate-700/50 text-white placeholder-gray-400 ${
+                    errors.email ? 'border-red-400 bg-red-500/20' : 'border-slate-600'
                   }`}
-                  placeholder="john.doe@example.com"
+                  placeholder="Email address"
                 />
                   {errors.email && (
                     <p className="mt-1 text-sm text-red-400">{errors.email}</p>
@@ -274,8 +290,8 @@ const LandingPage = () => {
                 </div>
 
                 <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-200 mb-2">
-                  Tell us about your learning
+                <label htmlFor="description" className="block text-sm font-medium text-white mb-2">
+                  Tell us about your learning goals (optional)
                 </label>
                 <textarea
                   id="description"
@@ -283,10 +299,9 @@ const LandingPage = () => {
                   value={formData.description}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-3 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200 resize-none bg-white/10 text-white placeholder-gray-400"
-                  placeholder="What subjects are you interested in? What are your learning goals?"
+                  className="w-full px-4 py-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 resize-none bg-slate-700/50 text-white placeholder-gray-400"
+                  placeholder="Tell us about your learning goals (optional)"
                 />
-                <p className="mt-1 text-sm text-gray-400">Optional - Help us understand your learning needs</p>
                 </div>
 
                 {/* Display submission error if any */}
@@ -308,7 +323,7 @@ const LandingPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-600 hover:via-pink-600 hover:to-yellow-500 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-600 hover:via-pink-600 hover:to-orange-500 focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
                   {isSubmitting ? (
                     <div className="flex items-center justify-center">
@@ -323,15 +338,28 @@ const LandingPage = () => {
                   )}
                 </button>
               </form>
+              
+              {/* Privacy Notice */}
+              <p className="mt-6 text-sm text-gray-400 text-center">
+                We'll use your email to send updates about Athira and related news. You may unsubscribe at any time via the link in our emails.
+              </p>
             </div>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center text-gray-400">
-          <p>&copy; 2024 Athira. Revolutionizing education through AI.</p>
+      <footer className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex justify-between items-center text-gray-400 text-sm">
+          <p>&copy; Athira, Inc. 2025</p>
+          <a 
+            href="/privacy-policy.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-white transition-colors duration-200"
+          >
+            Privacy Policy
+          </a>
         </div>
       </footer>
     </div>
