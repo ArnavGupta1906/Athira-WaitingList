@@ -42,6 +42,10 @@ export const isGoogleAppsScriptConfigured = () => {
 console.log('🔧 Google Apps Script Configuration:')
 console.log('📋 URL:', GOOGLE_APPS_SCRIPT_URL)
 console.log('✅ Properly configured:', isGoogleAppsScriptConfigured())
+console.log('🔍 URL Analysis:')
+console.log('  - Contains /library/:', GOOGLE_APPS_SCRIPT_URL.includes('library'))
+console.log('  - Contains /macros/s/:', GOOGLE_APPS_SCRIPT_URL.includes('script.google.com/macros/s/'))
+console.log('  - Ends with /exec:', GOOGLE_APPS_SCRIPT_URL.endsWith('/exec'))
 if (!isGoogleAppsScriptConfigured()) {
   console.warn('⚠️  Google Apps Script is NOT properly configured!')
   console.warn('📖 Please follow the setup guide to deploy a proper web app.')

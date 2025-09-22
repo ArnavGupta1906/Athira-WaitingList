@@ -116,7 +116,7 @@ export const submitToGoogleSheets = async (registrationData) => {
     })
     
     // Handle different types of errors
-    let errorMessage = 'Something went wrong. Please try again.'
+    let errorMessage = `Something went wrong. Please try again. Error: ${error.message}`
     
     if (error.name === 'AbortError') {
       console.error('⏰ Request timed out')
@@ -127,6 +127,11 @@ export const submitToGoogleSheets = async (registrationData) => {
     } else if (error.message.includes('CORS')) {
       console.error('🔒 CORS error')
       errorMessage = 'Configuration error. Please contact support.'
+    } else {
+      console.error('🔍 Detailed error analysis:')
+      console.error('Error name:', error.name)
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
     }
     
     // Return a user-friendly error message
