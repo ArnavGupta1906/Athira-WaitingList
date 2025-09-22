@@ -172,24 +172,30 @@ const LandingPage = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             {/* Logo Section */}
-            <div className="mb-8">
-              <div className="flex justify-center mb-6">
+            <div className="mb-6">
+              <div className="flex justify-center mb-3">
                 <img 
                   src="/IconOnly.png" 
                   alt="Athira Logo" 
-                  className="w-24 h-24 mx-auto"
+                  className="w-24 h-24"
                   style={{
                     filter: 'drop-shadow(0 0 20px rgba(255, 76, 139, 0.3)) drop-shadow(0 0 40px rgba(255, 124, 76, 0.2))'
+                  }}
+                  onError={(e) => {
+                    e.target.style.display = 'none'
                   }}
                 />
               </div>
               
               {/* Full Logo Image */}
-              <div className="flex justify-center mb-8">
+              <div className="flex justify-center mb-4">
                 <img 
                   src="/FullLogo.png" 
                   alt="Athira Full Logo" 
-                  className="h-16 mx-auto"
+                  className="h-20 w-auto max-w-sm mx-auto object-contain"
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                  }}
                 />
               </div>
             </div>
