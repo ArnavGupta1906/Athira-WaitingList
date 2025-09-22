@@ -17,9 +17,9 @@
 // ❌ Current URL is: https://script.google.com/macros/library/... (LIBRARY URL - WRONG!)
 
 export const GOOGLE_APPS_SCRIPT_CONFIG = {
-  // 🔧 REPLACE THIS with your actual Google Apps Script Web App URL from deployment
+  // 🔧 REPLACE THIS wnpith your actual Google Apps Script Web App URL from deployment
   // This should be a URL that ends with /exec, not /library/...
-  WEB_APP_URL: process.env.REACT_APP_GOOGLE_APPS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbych9cWFYHnHOX4NqCpKA0v_hza6HonQ977YJ9qWcv7-vaZYF1YxWTdoT-m37d_GL-_/exec',
+  WEB_APP_URL: process.env.REACT_APP_GOOGLE_APPS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbz2jKRAGh2VUfSVRrTZla-nOI5KTD-5T2VCn5qn5Mui4ta9s-lk2Ucy6x8JytMgKhlf/exec',
   
   // Optional: Add other configuration options
   TIMEOUT: 10000, // 10 seconds timeout
