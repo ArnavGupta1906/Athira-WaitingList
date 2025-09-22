@@ -87,7 +87,7 @@ const LandingPage = () => {
   // Show welcome page after successful registration
   if (showWelcome) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-slate-900 to-purple-900 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-[#0C0E1A] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="space-y-8">
             {/* Success Icon */}
@@ -101,7 +101,7 @@ const LandingPage = () => {
             <div className="space-y-6">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight">
                 Welcome to
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">
+                <span className="block text-transparent bg-clip-text" style={{background: 'linear-gradient(90deg, #FF4C8B, #FF7C4C, #FFD84C)', WebkitBackgroundClip: 'text', backgroundClip: 'text'}}>
                   Athira
                 </span>
               </h1>
@@ -148,13 +148,14 @@ const LandingPage = () => {
         
         {/* Footer */}
         <footer className="py-6 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex justify-between items-center text-gray-400 text-sm">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-sm" style={{color: '#AAB0C5'}}>
             <p>&copy; Athira, Inc. 2025</p>
             <a 
               href="/privacy-policy.pdf" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors duration-200"
+              className="hover:text-white transition-colors duration-200"
+              style={{color: '#AAB0C5'}}
             >
               Privacy Policy
             </a>
@@ -165,59 +166,40 @@ const LandingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-slate-900 to-purple-900 flex flex-col">
+    <div className="min-h-screen bg-[#0C0E1A] flex flex-col">
       {/* Main Content - Registration Form */}
       <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             {/* Logo Section */}
             <div className="mb-8">
-              <div className="w-24 h-24 mx-auto mb-4 bg-slate-800 rounded-lg border border-slate-700 flex items-center justify-center">
-                <div className="text-center">
-                  {/* Athira Logo - Stylized A with gradient lines */}
-                  <div className="w-12 h-12 mx-auto mb-1 relative">
-                    {/* Multi-line gradient A logo */}
-                    <svg width="48" height="48" viewBox="0 0 48 48" className="absolute inset-0">
-                      {/* Left leg of A */}
-                      <path d="M9 37.5 L15 15 L21 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M12 37.5 L16.5 15 L22.5 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M15 37.5 L18 15 L24 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      
-                      {/* Right leg of A */}
-                      <path d="M39 37.5 L33 15 L27 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M36 37.5 L31.5 15 L25.5 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M33 37.5 L30 15 L24 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      
-                      {/* Top of A - curved meeting point */}
-                      <path d="M24 15 Q27 9 30 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M24 15 Q25.5 9 27 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M24 15 Q26.25 9 28.5 15" stroke="url(#gradient)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      
-                      <defs>
-                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#EC4899" />
-                          <stop offset="25%" stopColor="#F97316" />
-                          <stop offset="50%" stopColor="#F59E0B" />
-                          <stop offset="75%" stopColor="#EAB308" />
-                          <stop offset="100%" stopColor="#F59E0B" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                  </div>
-                  <div className="text-xs text-white font-medium tracking-wider">ATHIRA</div>
-                </div>
+              <div className="flex justify-center mb-6">
+                <img 
+                  src="/IconOnly.png" 
+                  alt="Athira Logo" 
+                  className="w-24 h-24 mx-auto"
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(255, 76, 139, 0.3)) drop-shadow(0 0 40px rgba(255, 124, 76, 0.2))'
+                  }}
+                />
+              </div>
+              
+              {/* Full Logo Image */}
+              <div className="flex justify-center mb-8">
+                <img 
+                  src="/FullLogo.png" 
+                  alt="Athira Full Logo" 
+                  className="h-16 mx-auto"
+                />
               </div>
             </div>
 
-            {/* Brand Name and Slogan */}
+            {/* Main Headline and Tagline */}
             <div className="mb-8">
-              <p className="text-sm text-gray-300 font-medium tracking-wide uppercase mb-2">
-                Because "due tomorrow" means "help tonight"
-              </p>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-orange-400 to-yellow-400 mb-4">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4" style={{color: '#F8D9E6'}}>
                 Athira
               </h1>
-              <p className="text-lg text-gray-400 font-light italic">
+              <p className="text-lg font-light italic" style={{color: '#C0C4D8'}}>
                 Because "due tomorrow" means "help tonight"
               </p>
             </div>
@@ -238,9 +220,13 @@ const LandingPage = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 bg-slate-700/50 text-white placeholder-gray-400 ${
-                        errors.firstName ? 'border-red-400 bg-red-500/20' : 'border-slate-600'
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 text-white placeholder-gray-400 ${
+                        errors.firstName ? 'border-red-400 bg-red-500/20' : ''
                       }`}
+                      style={{
+                        backgroundColor: errors.firstName ? undefined : '#0C0E1A',
+                        borderColor: errors.firstName ? undefined : '#C0C4D8'
+                      }}
                       placeholder="First name"
                     />
                     {errors.firstName && (
@@ -258,9 +244,13 @@ const LandingPage = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 bg-slate-700/50 text-white placeholder-gray-400 ${
-                        errors.lastName ? 'border-red-400 bg-red-500/20' : 'border-slate-600'
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 text-white placeholder-gray-400 ${
+                        errors.lastName ? 'border-red-400 bg-red-500/20' : ''
                       }`}
+                      style={{
+                        backgroundColor: errors.lastName ? undefined : '#0C0E1A',
+                        borderColor: errors.lastName ? undefined : '#C0C4D8'
+                      }}
                       placeholder="Last name"
                     />
                     {errors.lastName && (
@@ -279,9 +269,13 @@ const LandingPage = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 bg-slate-700/50 text-white placeholder-gray-400 ${
-                    errors.email ? 'border-red-400 bg-red-500/20' : 'border-slate-600'
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 text-white placeholder-gray-400 ${
+                    errors.email ? 'border-red-400 bg-red-500/20' : ''
                   }`}
+                  style={{
+                    backgroundColor: errors.email ? undefined : '#0C0E1A',
+                    borderColor: errors.email ? undefined : '#C0C4D8'
+                  }}
                   placeholder="Email address"
                 />
                   {errors.email && (
@@ -291,7 +285,7 @@ const LandingPage = () => {
 
                 <div>
                 <label htmlFor="description" className="block text-sm font-medium text-white mb-2">
-                  Tell us about your learning goals (optional)
+                  Goals (optional)
                 </label>
                 <textarea
                   id="description"
@@ -299,8 +293,12 @@ const LandingPage = () => {
                   value={formData.description}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 resize-none bg-slate-700/50 text-white placeholder-gray-400"
-                  placeholder="Tell us about your learning goals (optional)"
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-colors duration-200 resize-none text-white placeholder-gray-400"
+                  style={{
+                    backgroundColor: '#0C0E1A',
+                    borderColor: '#C0C4D8'
+                  }}
+                  placeholder="Goals (optional)"
                 />
                 </div>
 
@@ -323,7 +321,8 @@ const LandingPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-600 hover:via-pink-600 hover:to-orange-500 focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="w-full text-white py-3 px-6 rounded-lg font-semibold focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
+                  style={{background: 'linear-gradient(90deg, #FF4C8B, #FF7C4C, #FFD84C)'}}
                 >
                   {isSubmitting ? (
                     <div className="flex items-center justify-center">
@@ -340,7 +339,7 @@ const LandingPage = () => {
               </form>
               
               {/* Privacy Notice */}
-              <p className="mt-6 text-sm text-gray-400 text-center">
+              <p className="mt-6 text-sm text-center" style={{color: '#AAB0C5'}}>
                 We'll use your email to send updates about Athira and related news. You may unsubscribe at any time via the link in our emails.
               </p>
             </div>
@@ -350,13 +349,14 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex justify-between items-center text-gray-400 text-sm">
+        <div className="max-w-7xl mx-auto flex justify-between items-center text-sm" style={{color: '#AAB0C5'}}>
           <p>&copy; Athira, Inc. 2025</p>
           <a 
             href="/privacy-policy.pdf" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors duration-200"
+            className="hover:text-white transition-colors duration-200"
+            style={{color: '#AAB0C5'}}
           >
             Privacy Policy
           </a>
