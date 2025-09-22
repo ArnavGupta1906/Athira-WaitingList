@@ -1,7 +1,7 @@
 /**
  * WORKING Frontend Service - This WILL work
  * 
- * Simple, clean service for Google Sheets integration
+ * Replace your current googleSheetsService.js with this code
  */
 
 import { GOOGLE_APPS_SCRIPT_URL } from '../config/googleAppsScript'

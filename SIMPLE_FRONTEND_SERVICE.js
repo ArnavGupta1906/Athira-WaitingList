@@ -1,13 +1,13 @@
 /**
- * WORKING Frontend Service - This WILL work
+ * SIMPLE Frontend Service - This WILL work
  * 
- * Simple, clean service for Google Sheets integration
+ * Replace your current googleSheetsService.js with this code
  */
 
 import { GOOGLE_APPS_SCRIPT_URL } from '../config/googleAppsScript'
 
 export const submitToGoogleSheets = async (registrationData) => {
-  console.log('🚀 WORKING: Starting submission...')
+  console.log('🚀 SIMPLE: Starting submission...')
   console.log('📊 Data:', registrationData)
   
   try {
@@ -23,28 +23,21 @@ export const submitToGoogleSheets = async (registrationData) => {
     console.log('📤 Sending to:', GOOGLE_APPS_SCRIPT_URL)
     console.log('📤 Payload:', payload)
 
-    // Create URL-encoded form data
-    const formData = new URLSearchParams()
-    formData.append('data', JSON.stringify(payload))
-    
-    console.log('📤 Form data:', formData.toString())
-
     // Make the request
     const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: formData
+      body: JSON.stringify(payload)
     })
 
     console.log('📡 Response status:', response.status)
     
     const result = await response.text()
-    console.log('📄 Raw response:', result)
+    console.log('📄 Response:', result)
     
     const parsedResult = JSON.parse(result)
-    console.log('📄 Parsed response:', parsedResult)
     
     if (parsedResult.success) {
       console.log('✅ SUCCESS! Data saved to Google Sheets')
@@ -55,7 +48,7 @@ export const submitToGoogleSheets = async (registrationData) => {
     }
 
   } catch (error) {
-    console.error('💥 WORKING: Error:', error)
+    console.error('💥 SIMPLE: Error:', error)
     return { 
       success: false, 
       error: `Something went wrong: ${error.message}`
