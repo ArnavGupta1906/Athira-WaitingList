@@ -105,25 +105,25 @@ const LandingPage = () => {
 
             {/* Additional Info */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-lg max-w-2xl mx-auto">
-              <h3 className="text-2xl font-semibold text-white mb-4">What's Next?</h3>
+              <h3 className="text-2xl font-semibold text-white mb-4">Benefits</h3>
               <div className="space-y-4 text-left">
                 <div className="flex items-start">
                   <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
                     <span className="text-green-400 text-sm font-bold">1</span>
                   </div>
-                  <p className="text-gray-300">We'll send you early access to our beta platform</p>
+                  <p className="text-gray-300">Personalized learning paths that adapt to your unique pace and learning style</p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
                     <span className="text-green-400 text-sm font-bold">2</span>
                   </div>
-                  <p className="text-gray-300">Get personalized learning recommendations</p>
+                  <p className="text-gray-300">Instant feedback and explanations to accelerate your understanding</p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
                     <span className="text-green-400 text-sm font-bold">3</span>
                   </div>
-                  <p className="text-gray-300">Start your AI-powered microtutoring journey</p>
+                  <p className="text-gray-300">24/7 AI tutoring support whenever you need help with your studies</p>
                 </div>
               </div>
             </div>
@@ -150,9 +150,35 @@ const LandingPage = () => {
             <div className="mb-8">
               <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-yellow-400/20 rounded-2xl border border-white/20 backdrop-blur-sm flex items-center justify-center">
                 <div className="text-center">
-                  {/* Athira Logo - Stylized A */}
-                  <div className="w-16 h-16 mx-auto mb-2 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-2xl">A</span>
+                  {/* Athira Logo - Stylized A with gradient lines */}
+                  <div className="w-16 h-16 mx-auto mb-2 relative">
+                    {/* Multi-line gradient A logo */}
+                    <svg width="64" height="64" viewBox="0 0 64 64" className="absolute inset-0">
+                      {/* Left leg of A */}
+                      <path d="M12 50 L20 20 L28 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M16 50 L22 20 L30 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M20 50 L24 20 L32 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      
+                      {/* Right leg of A */}
+                      <path d="M52 50 L44 20 L36 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M48 50 L42 20 L34 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M44 50 L40 20 L32 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      
+                      {/* Top of A - curved meeting point */}
+                      <path d="M32 20 Q36 12 40 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M32 20 Q34 12 36 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M32 20 Q35 12 38 20" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      
+                      <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#8B5CF6" />
+                          <stop offset="25%" stopColor="#EC4899" />
+                          <stop offset="50%" stopColor="#F59E0B" />
+                          <stop offset="75%" stopColor="#F97316" />
+                          <stop offset="100%" stopColor="#EAB308" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
                   </div>
                   <div className="text-xs text-gray-400 font-medium tracking-wider">ATHIRA</div>
                 </div>

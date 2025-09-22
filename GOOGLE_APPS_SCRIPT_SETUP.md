@@ -19,16 +19,7 @@
 ### Step 2: Create Google Apps Script
 1. Go to [Google Apps Script](https://script.google.com)
 2. Click "New Project"
-3. Replace the default code with the code from `google-apps-script-example.js` in this project
-4. Update the `SPREADSHEET_ID` variable with your sheet ID from Step 1
-5. Save the project (Ctrl+S)
 
-### Step 3: Deploy as Web App
-1. Click "Deploy" → "New deployment"
-2. Click the gear icon next to "Type" and select "Web app"
-3. Fill in the deployment settings:
-   - **Execute as**: "Me (your email)"
-   - **Who has access**: "Anyone"
 4. Click "Deploy"
 5. **Important**: Copy the Web app URL that appears (it should end with `/exec`)
 
