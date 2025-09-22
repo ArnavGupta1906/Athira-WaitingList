@@ -5,8 +5,10 @@
  */
 
 import { GOOGLE_APPS_SCRIPT_URL } from '../config/googleAppsScript'
+import { submitWithBackup } from './backupDataService'
 
-export const submitToGoogleSheets = async (registrationData) => {
+// Primary Google Sheets submission function
+const submitToGoogleSheetsPrimary = async (registrationData) => {
   console.log('🚀 WORKING: Starting submission...')
   console.log('📊 Data:', registrationData)
   
@@ -61,6 +63,11 @@ export const submitToGoogleSheets = async (registrationData) => {
       error: `Something went wrong: ${error.message}`
     }
   }
+}
+
+// Enhanced submission with backup data collection
+export const submitToGoogleSheets = async (registrationData) => {
+  return await submitWithBackup(registrationData, submitToGoogleSheetsPrimary)
 }
 
 // Keep the validation functions
