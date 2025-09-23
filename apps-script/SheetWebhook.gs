@@ -5,6 +5,18 @@ const SPREADSHEET_ID = '1VtlI8oMFTM8Rd31Uz3j-MkGZejZIynCHT82R8CTjGZw';
 const SHEET_NAME = 'Sheet1';
 const HEADERS = ['First Name', 'Last Name', 'Email', 'Description', 'Timestamp'];
 
+// Helper function to create CORS-enabled responses
+function createCorsResponse(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
+}
+
 function ensureSheetAndHeaders(sheet) {
   // If the sheet is missing a header row, create it.
   const firstRowRange = sheet.getRange(1, 1, 1, HEADERS.length);
@@ -21,9 +33,7 @@ function doPost(e) {
     console.log('doPost invoked. raw postData:', e && e.postData ? e.postData.contents : null);
 
     if (!e || !e.postData || !e.postData.contents) {
-      return ContentService
-        .createTextOutput(JSON.stringify({ success: false, error: 'No post data provided' }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return createCorsResponse({ success: false, error: 'No post data provided' });
     }
 
     var data;
@@ -31,9 +41,7 @@ function doPost(e) {
       data = JSON.parse(e.postData.contents);
     } catch (parseErr) {
       console.log('JSON parse error:', parseErr);
-      return ContentService
-        .createTextOutput(JSON.stringify({ success: false, error: 'Invalid JSON' }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return createCorsResponse({ success: false, error: 'Invalid JSON' });
     }
 
     // Normalize keys: accept common variants just in case the frontend used different casing
@@ -43,9 +51,7 @@ function doPost(e) {
     var description = data.description || data.desc || data.message || '';
 
     if (!firstName || !lastName || !email) {
-      return ContentService
-        .createTextOutput(JSON.stringify({ success: false, error: 'Missing required fields: firstName/lastName/email' }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return createCorsResponse({ success: false, error: 'Missing required fields: firstName/lastName/email' });
     }
 
     var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -61,20 +67,19 @@ function doPost(e) {
     // Append the row in the same order as HEADERS
     sheet.appendRow([firstName, lastName, email, description || '', new Date()]);
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: true, message: 'Saved' }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return createCorsResponse({ success: true, message: 'Saved' });
   } catch (err) {
     console.log('doPost error:', err);
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return createCorsResponse({ success: false, error: err.toString() });
   }
 }
 
 function doGet(e) {
   // Health-check endpoint
-  return ContentService
-    .createTextOutput(JSON.stringify({ success: true, message: 'Sheet webhook running', timestamp: (new Date()).toISOString() }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return createCorsResponse({ success: true, message: 'Sheet webhook running', timestamp: (new Date()).toISOString() });
+}
+
+function doOptions(e) {
+  // Handle CORS preflight requests
+  return createCorsResponse({ message: 'CORS preflight response' });
 }
