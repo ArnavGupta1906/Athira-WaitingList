@@ -5,8 +5,8 @@
  * Formspree can automatically forward submissions to Google Sheets.
  */
 
-// You'll get this URL after creating a form at formspree.io
-const FORMSPREE_URL = process.env.REACT_APP_FORMSPREE_URL || 'YOUR_FORMSPREE_URL_HERE';
+// Your Formspree form URL
+const FORMSPREE_URL = process.env.REACT_APP_FORMSPREE_URL || 'https://formspree.io/f/myzngqlz';
 
 export const submitToFormspree = async (registrationData) => {
   console.log('🚀 Submitting to Formspree...');

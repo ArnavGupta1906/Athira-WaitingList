@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-// Choose your integration method - uncomment the one you want to use:
-import { submitToGoogleSheets, validateForm as validateFormData } from '../services/googleSheetsService'
-// import { submitToFormspree as submitToGoogleSheets, validateForm as validateFormData } from '../services/formspreeService'
-// import { submitToGoogleSheetsAPI as submitToGoogleSheets, validateForm as validateFormData } from '../services/googleSheetsAPIService'
+// Using Formspree integration - much more reliable than Google Apps Script!
+import { submitToFormspree as submitToGoogleSheets, validateForm as validateFormData } from '../services/formspreeService'
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({

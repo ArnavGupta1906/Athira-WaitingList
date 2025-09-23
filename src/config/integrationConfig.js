@@ -14,7 +14,7 @@ export const INTEGRATION_METHOD = 'formspree'; // Change this to switch methods
 // Configuration URLs/Keys
 export const INTEGRATION_CONFIG = {
   formspree: {
-    url: process.env.REACT_APP_FORMSPREE_URL || 'YOUR_FORMSPREE_URL_HERE',
+    url: process.env.REACT_APP_FORMSPREE_URL || 'https://formspree.io/f/myzngqlz',
     name: 'Formspree'
   },
   'sheets-api': {
