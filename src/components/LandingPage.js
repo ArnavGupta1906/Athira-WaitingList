@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// Using Formspree integration - much more reliable than Google Apps Script!
 import { submitToFormspree as submitToGoogleSheets, validateForm as validateFormData } from '../services/formspreeService'
 
 const LandingPage = () => {

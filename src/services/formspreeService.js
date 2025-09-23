@@ -23,7 +23,6 @@ export const submitToFormspree = async (registrationData) => {
         lastName: registrationData.lastName,
         email: registrationData.email,
         description: registrationData.description,
-        fullName: `${registrationData.firstName} ${registrationData.lastName}`,
         timestamp: new Date().toISOString()
       })
     });
