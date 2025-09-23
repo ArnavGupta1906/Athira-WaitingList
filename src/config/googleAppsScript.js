@@ -19,7 +19,7 @@
 export const GOOGLE_APPS_SCRIPT_CONFIG = {
   // 🔧 REPLACE THIS wnpith your actual Google Apps Script Web App URL from deployment
   // This should be a URL that ends with /exec, not /library/...
-  WEB_APP_URL: process.env.REACT_APP_GOOGLE_APPS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbw26gPqL6rPgTmM-dAtkxSgoccD2QGnRDEVBnGCuSTuNuhFA6Z_pTNOAELMn0FVddIebw/exec',
+  WEB_APP_URL: process.env.REACT_APP_GOOGLE_APPS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxTbv_kIn6DG0eR5Y31t4YSEcI9b0XwavqZeTWy02Lok2JnjWuWaNGmhoXZ8Itt4zyNJQ/exec',
   
   // Optional: Add other configuration options
   TIMEOUT: 10000, // 10 seconds timeout
