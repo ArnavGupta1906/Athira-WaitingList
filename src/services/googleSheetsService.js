@@ -1,19 +1,16 @@
 /**
- * WORKING Frontend Service - This WILL work
- * 
- * Simple, clean service for Google Sheets integration
+ * Clean and Simple Google Sheets Service
+ * Final consolidated version for reliable waitlist integration
  */
 
 import { GOOGLE_APPS_SCRIPT_URL } from '../config/googleAppsScript'
-import { submitWithBackup } from './backupDataService'
 
-// Primary Google Sheets submission function
-const submitToGoogleSheetsPrimary = async (registrationData) => {
-  console.log('🚀 WORKING: Starting submission...')
+export const submitToGoogleSheets = async (registrationData) => {
+  console.log('🚀 Starting Google Sheets submission...')
   console.log('📊 Data:', registrationData)
   
   try {
-    // Prepare the data
+    // Prepare the data payload
     const payload = {
       firstName: registrationData.firstName.trim(),
       lastName: registrationData.lastName.trim(),
@@ -25,22 +22,20 @@ const submitToGoogleSheetsPrimary = async (registrationData) => {
     console.log('📤 Sending to:', GOOGLE_APPS_SCRIPT_URL)
     console.log('📤 Payload:', payload)
 
-    // Create URL-encoded form data
-    const formData = new URLSearchParams()
-    formData.append('data', JSON.stringify(payload))
-    
-    console.log('📤 Form data:', formData.toString())
-
-    // Make the request
+    // Make the request with JSON payload
     const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: formData
+      body: JSON.stringify(payload)
     })
 
     console.log('📡 Response status:', response.status)
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
     
     const result = await response.text()
     console.log('📄 Raw response:', result)
@@ -50,24 +45,19 @@ const submitToGoogleSheetsPrimary = async (registrationData) => {
     
     if (parsedResult.success) {
       console.log('✅ SUCCESS! Data saved to Google Sheets')
-      return { success: true }
+      return { success: true, message: parsedResult.message }
     } else {
       console.error('❌ Google Apps Script error:', parsedResult.error)
-      throw new Error(parsedResult.error || 'Unknown error')
+      throw new Error(parsedResult.error || 'Unknown server error')
     }
 
   } catch (error) {
-    console.error('💥 WORKING: Error:', error)
+    console.error('💥 Submission Error:', error)
     return { 
       success: false, 
-      error: `Something went wrong: ${error.message}`
+      error: `Failed to save registration: ${error.message}`
     }
   }
-}
-
-// Enhanced submission with backup data collection
-export const submitToGoogleSheets = async (registrationData) => {
-  return await submitWithBackup(registrationData, submitToGoogleSheetsPrimary)
 }
 
 // Keep the validation functions

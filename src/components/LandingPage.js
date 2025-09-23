@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { submitToGoogleSheets, validateForm as validateFormData } from '../services/googleSheetsService'
-import DataRecoveryTool from './DataRecoveryTool'
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -369,9 +368,6 @@ const LandingPage = () => {
           </a>
         </div>
       </footer>
-      
-      {/* Data Recovery Tool */}
-      <DataRecoveryTool />
     </div>
   )
 }
