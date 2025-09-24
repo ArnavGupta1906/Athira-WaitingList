@@ -1,19 +1,19 @@
 /**
- * Formspree Integration - Super Simple & Reliable
+ * Google Sheets Integration - Reliable & Unlimited
  * 
- * This is much easier than Google Apps Script and works instantly.
- * Formspree can automatically forward submissions to Google Sheets.
+ * This service uses Google Apps Script to directly write to Google Sheets.
+ * Much more reliable than Formspree and can handle unlimited entries.
  */
 
-// Your Formspree form URL
-const FORMSPREE_URL = process.env.REACT_APP_FORMSPREE_URL || 'https://formspree.io/f/myzngqlz';
+// Google Apps Script web app URL - you need to deploy the script and get the URL
+const GOOGLE_APPS_SCRIPT_URL = process.env.REACT_APP_GOOGLE_APPS_SCRIPT_URL || 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
 
-export const submitToFormspree = async (registrationData) => {
-  console.log('🚀 Submitting to Formspree...');
+export const submitToGoogleSheets = async (registrationData) => {
+  console.log('🚀 Submitting to Google Sheets via Apps Script...');
   console.log('📊 Data:', registrationData);
   
   try {
-    const response = await fetch(FORMSPREE_URL, {
+    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,16 +31,16 @@ export const submitToFormspree = async (registrationData) => {
     
     if (response.ok) {
       const result = await response.json();
-      console.log('✅ SUCCESS! Data submitted via Formspree');
+      console.log('✅ SUCCESS! Data submitted to Google Sheets');
       return { success: true, message: 'Registration saved successfully!' };
     } else {
       const error = await response.text();
-      console.error('❌ Formspree error:', error);
+      console.error('❌ Google Apps Script error:', error);
       throw new Error(`Submission failed: ${response.status}`);
     }
 
   } catch (error) {
-    console.error('💥 Formspree submission error:', error);
+    console.error('💥 Google Sheets submission error:', error);
     return { 
       success: false, 
       error: `Failed to save registration: ${error.message}`

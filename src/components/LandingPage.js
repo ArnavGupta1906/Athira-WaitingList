@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { submitToFormspree as submitToGoogleSheets, validateForm as validateFormData } from '../services/formspreeService'
+import { submitToGoogleSheets, validateForm as validateFormData } from '../services/simpleFormService'
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
