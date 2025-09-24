@@ -1,63 +1,60 @@
-# Google Apps Script Setup Guide
+# Google Apps Script Setup for Athira Waitlist
 
-## Current Status
-⚠️ **The registration form is currently using a mock/demo mode** because the Google Apps Script URL is not properly configured. The form will still work and show success messages, but data won't be saved to Google Sheets.
+## 🎯 Overview
+This setup uses Google Apps Script to directly save form submissions to your Google Sheet. It's reliable, unlimited, and requires no third-party services.
 
-## How to Fix the "Failed to fetch" Error
+## 📋 Prerequisites
+- Google account
+- Access to the Google Sheet: https://docs.google.com/spreadsheets/d/1VtlI8oMFTM8Rd31Uz3j-MkGZejZIynCHT82R8CTjGZw/edit?usp=sharing
 
-### Step 1: Create a Google Sheet
-1. Go to [Google Sheets](https://sheets.google.com)
-2. Create a new spreadsheet called "Athira Waitlist"
-3. Add these headers in row 1:
-   - A1: `First Name`
-   - B1: `Last Name`
-   - C1: `Email`
-   - D1: `Description`
-   - E1: `Timestamp`
-4. Copy the spreadsheet ID from the URL (the long string between `/d/` and `/edit`)
+## 🚀 Setup Steps
 
-### Step 2: Create Google Apps Script
-1. Go to [Google Apps Script](https://script.google.com)
+### Step 1: Create Google Apps Script
+1. Go to [script.google.com](https://script.google.com)
 2. Click "New Project"
+3. Replace the default code with the content from `google-apps-script.js`
+4. Save the project (Ctrl+S or Cmd+S)
 
-4. Click "Deploy"
-5. **Important**: Copy the Web app URL that appears (it should end with `/exec`)
+### Step 2: Deploy as Web App
+1. Click "Deploy" → "New deployment"
+2. Choose "Web app" as the type
+3. Set "Execute as" to "Me"
+4. Set "Who has access" to "Anyone"
+5. Click "Deploy"
+6. **Copy the web app URL** - you'll need this for your React app
 
-### Step 4: Update the React App
-1. Open `src/config/googleAppsScript.js`
-2. Replace the `WEB_APP_URL` with your actual web app URL from Step 3
-3. Save the file
+### Step 3: Update React App
+1. Open your `.env` file
+2. Replace `YOUR_SCRIPT_ID` with the actual script ID from your web app URL
+3. The URL should look like: `https://script.google.com/macros/s/ACTUAL_SCRIPT_ID/exec`
 
-### Step 5: Test the Form
-1. Restart your React development server (`npm start`)
-2. Fill out the registration form
-3. Check your Google Sheet - new submissions should appear as rows
+### Step 4: Test the Integration
+1. Start your React app: `npm start`
+2. Fill out the form with test data
+3. Submit the form
+4. Check your Google Sheet for the new row
 
-## Troubleshooting
+## 📊 Data Structure
+The script will create these columns in your Google Sheet:
+- First Name
+- Last Name  
+- Email
+- Description
+- Timestamp
 
-### "Failed to fetch" Error
-- Make sure you're using the **web app URL** (ends with `/exec`), not the library URL
-- Ensure the Google Apps Script is deployed with "Anyone" access
-- Check that your Google Sheet ID is correct
+## 🔧 Troubleshooting
 
-### "Script function not found" Error
-- Make sure you saved the Google Apps Script code
-- Verify the function name is `doPost` (case-sensitive)
+### If submissions don't appear in the sheet:
+1. Check that the script is deployed as a web app
+2. Verify the web app URL is correct in your `.env` file
+3. Make sure "Anyone" has access to the web app
+4. Check the Google Apps Script execution logs for errors
 
-### Data Not Appearing in Sheet
-- Check the Google Apps Script execution logs for errors
-- Verify the sheet name matches the `SHEET_NAME` variable
-- Make sure the spreadsheet ID is correct
+### If you get CORS errors:
+- The Google Apps Script handles CORS automatically
+- Make sure you're using the correct web app URL (not the script editor URL)
 
-### CORS Errors
-- Google Apps Script handles CORS automatically when deployed as a web app
-- If you still see CORS errors, try redeploying the script
-
-## Current Configuration
-The app is currently configured to work in demo mode when the Google Apps Script URL is not properly set up. This means:
-- ✅ Form validation works
-- ✅ Success/error messages appear
-- ✅ User experience is maintained
-- ❌ Data is not actually saved to Google Sheets
-
-Once you follow the setup steps above, real data submission will be enabled automatically.
+## ✅ Success Indicators
+- Form submissions appear in your Google Sheet
+- No CORS errors in browser console
+- Success message shows after form submission
