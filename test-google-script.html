@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Apps Script Tester</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f7f7f7;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .log {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+        .log-entry {
+            margin: 2px 0;
+        }
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .form-full {
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Google Apps Script Form Submission Tester</h1>
+        
+        <div class="instructions">
+            <strong>⚡ Quick Setup:</strong>
+            <ol>
+                <li>Copy the code from <code>BULLETPROOF_GOOGLE_SCRIPT.gs</code></li>
+                <li>Create a Google Sheet and get its ID from the URL</li>
+                <li>Replace YOUR_SPREADSHEET_ID_HERE in the script</li>
+                <li>Deploy as Web App (Execute as: Me, Access: Anyone)</li>
+                <li>Copy the deployment URL and paste it below</li>
+            </ol>
+        </div>
+
+        <!-- URL Configuration -->
+        <div class="test-section">
+            <h2>1️⃣ Configure Script URL</h2>
+            <input type="text" 
+                   id="scriptUrl" 
+                   placeholder="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
+                   value="">
+            <button onclick="testConnection()">Test Connection</button>
+            <button onclick="saveUrl()">Save URL</button>
+            <div id="urlStatus" class="status"></div>
+        </div>
+
+        <!-- Test Form -->
+        <div class="test-section">
+            <h2>2️⃣ Test Form Submission</h2>
+            <div class="form-grid">
+                <input type="text" id="firstName" placeholder="First Name" value="John">
+                <input type="text" id="lastName" placeholder="Last Name" value="Doe">
+                <input type="email" id="email" placeholder="Email" value="john@example.com" class="form-full">
+                <textarea id="description" placeholder="Description (optional)" rows="3" class="form-full">Testing the form submission</textarea>
+            </div>
+            <br>
+            <button onclick="testMethod1()">Method 1: CORS Mode</button>
+            <button onclick="testMethod2()">Method 2: No-CORS Mode</button>
+            <button onclick="testMethod3()">Method 3: Form POST</button>
+            <button onclick="testMethod4()">Method 4: GET with Params</button>
+            <div id="formStatus" class="status"></div>
+        </div>
+
+        <!-- Console Log -->
+        <div class="test-section">
+            <h2>📋 Debug Console</h2>
+            <button onclick="clearLog()">Clear Log</button>
+            <div id="console" class="log"></div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="test-section">
+            <h2>🔍 Debugging Tips</h2>
+            <ul>
+                <li><strong>Test Connection First:</strong> This verifies your script is deployed correctly</li>
+                <li><strong>Check Apps Script Logs:</strong> View → Logs in the Apps Script editor</li>
+                <li><strong>Common Issues:</strong>
+                    <ul>
+                        <li>Wrong Spreadsheet ID → Check the URL of your Google Sheet</li>
+                        <li>Deployment not updated → Deploy → Manage Deployments → Update</li>
+                        <li>Access denied → Make sure "Anyone" can access</li>
+                    </ul>
+                </li>
+                <li><strong>If nothing works:</strong> Try Method 3 (Form POST) - it opens in new tab</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Logging function
+        function log(message, type = 'info') {
+            const console = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            
+            let emoji = '📝';
+            if (type === 'success') emoji = '✅';
+            if (type === 'error') emoji = '❌';
+            if (type === 'warning') emoji = '⚠️';
+            
+            entry.innerHTML = `[${timestamp}] ${emoji} ${message}`;
+            console.appendChild(entry);
+            console.scrollTop = console.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('console').innerHTML = '';
+            log('Console cleared');
+        }
+
+        // Load saved URL
+        window.onload = function() {
+            const savedUrl = localStorage.getItem('googleScriptUrl');
+            if (savedUrl) {
+                document.getElementById('scriptUrl').value = savedUrl;
+                log('Loaded saved URL from localStorage');
+            }
+        }
+
+        function saveUrl() {
+            const url = document.getElementById('scriptUrl').value;
+            if (url) {
+                localStorage.setItem('googleScriptUrl', url);
+                showStatus('urlStatus', 'URL saved to localStorage!', 'success');
+                log('URL saved: ' + url, 'success');
+            }
+        }
+
+        function showStatus(elementId, message, type) {
+            const status = document.getElementById(elementId);
+            status.textContent = message;
+            status.className = 'status ' + type;
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        }
+
+        function getFormData() {
+            return {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                description: document.getElementById('description').value
+            };
+        }
+
+        async function testConnection() {
+            const url = document.getElementById('scriptUrl').value;
+            if (!url) {
+                showStatus('urlStatus', 'Please enter a Google Apps Script URL', 'error');
+                return;
+            }
+
+            log('Testing connection to: ' + url);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    log('Connection successful!', 'success');
+                    log('Response: ' + JSON.stringify(data, null, 2));
+                    showStatus('urlStatus', '✅ Connection successful! Script is working.', 'success');
+                } else {
+                    log('Connection failed with status: ' + response.status, 'error');
+                    showStatus('urlStatus', 'Connection failed. Status: ' + response.status, 'error');
+                }
+            } catch (error) {
+                log('Connection error: ' + error.message, 'error');
+                showStatus('urlStatus', 'Connection error: ' + error.message, 'error');
+            }
+        }
+
+        async function testMethod1() {
+            const url = document.getElementById('scriptUrl').value;
+            if (!url) {
+                showStatus('formStatus', 'Please enter a Google Apps Script URL', 'error');
+                return;
+            }
+
+            const data = getFormData();
+            log('Testing Method 1: CORS Mode');
+            log('Sending: ' + JSON.stringify(data));
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                log('Response status: ' + response.status);
+
+                if (response.ok) {
+                    const result = await response.json();
+                    log('Success! Response: ' + JSON.stringify(result), 'success');
+                    showStatus('formStatus', '✅ Method 1 Success! Check your Google Sheet.', 'success');
+                } else {
+                    log('Method 1 failed with status: ' + response.status, 'error');
+                    showStatus('formStatus', 'Method 1 failed. Status: ' + response.status, 'error');
+                }
+            } catch (error) {
+                log('Method 1 error: ' + error.message, 'error');
+                showStatus('formStatus', 'Method 1 error: ' + error.message, 'error');
+            }
+        }
+
+        async function testMethod2() {
+            const url = document.getElementById('scriptUrl').value;
+            if (!url) {
+                showStatus('formStatus', 'Please enter a Google Apps Script URL', 'error');
+                return;
+            }
+
+            const data = getFormData();
+            log('Testing Method 2: No-CORS Mode');
+            log('Sending: ' + JSON.stringify(data));
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                log('Method 2 request sent (no response available in no-cors mode)', 'warning');
+                showStatus('formStatus', '✅ Method 2 sent! Check your Google Sheet to verify.', 'info');
+            } catch (error) {
+                log('Method 2 error: ' + error.message, 'error');
+                showStatus('formStatus', 'Method 2 error: ' + error.message, 'error');
+            }
+        }
+
+        function testMethod3() {
+            const url = document.getElementById('scriptUrl').value;
+            if (!url) {
+                showStatus('formStatus', 'Please enter a Google Apps Script URL', 'error');
+                return;
+            }
+
+            const data = getFormData();
+            log('Testing Method 3: Form POST (opens in new tab)');
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = url;
+            form.target = '_blank';
+
+            for (const [key, value] of Object.entries(data)) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                form.appendChild(input);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+
+            log('Method 3 form submitted in new tab', 'success');
+            showStatus('formStatus', '✅ Method 3 submitted! Check the new tab and your Google Sheet.', 'info');
+        }
+
+        function testMethod4() {
+            const url = document.getElementById('scriptUrl').value;
+            if (!url) {
+                showStatus('formStatus', 'Please enter a Google Apps Script URL', 'error');
+                return;
+            }
+
+            const data = getFormData();
+            log('Testing Method 4: GET with parameters');
+
+            const params = new URLSearchParams(data);
+            const fullUrl = `${url}?${params.toString()}`;
+            
+            log('Opening URL: ' + fullUrl);
+            window.open(fullUrl, '_blank');
+
+            log('Method 4 opened in new tab', 'success');
+            showStatus('formStatus', '✅ Method 4 opened! Check the new tab.', 'info');
+        }
+
+        // Initialize
+        clearLog();
+        log('Tester initialized. Ready to test your Google Apps Script!');
+    </script>
+</body>
+</html>
