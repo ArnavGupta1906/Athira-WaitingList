@@ -88,77 +88,135 @@ const LandingPage = () => {
   if (showWelcome) {
     return (
       <div className="min-h-screen bg-[#0C0E1A] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="space-y-8">
-            {/* Success Icon */}
-            <div className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-8">
-              <svg className="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-              </svg>
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="space-y-12">
+            {/* Animated Success Icon */}
+            <div className="relative">
+              <div className="w-32 h-32 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
+                <div className="w-24 h-24 bg-green-500/30 rounded-full flex items-center justify-center">
+                  <svg className="w-16 h-16 text-green-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+              {/* Success particles animation */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-ping absolute"></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-ping absolute" style={{animationDelay: '0.5s'}}></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-ping absolute" style={{animationDelay: '1s'}}></div>
+              </div>
             </div>
 
-            {/* Welcome Message */}
-            <div className="space-y-6">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight">
-                Welcome to
-                <span className="block text-transparent bg-clip-text" style={{background: 'linear-gradient(90deg, #FF4C8B, #FF7C4C, #FFD84C)', WebkitBackgroundClip: 'text', backgroundClip: 'text'}}>
-                  Athira
-                </span>
-              </h1>
+            {/* Welcome Message with enhanced styling */}
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white leading-tight">
+                  Welcome to
+                  <span className="block text-transparent bg-clip-text animate-pulse" style={{background: 'linear-gradient(90deg, #FF4C8B, #FF7C4C, #FFD84C)', WebkitBackgroundClip: 'text', backgroundClip: 'text'}}>
+                    Athira
+                  </span>
+                </h1>
+                
+                <div className="inline-flex items-center px-4 py-2 bg-green-500/20 rounded-full border border-green-400/30">
+                  <svg className="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-green-400 font-semibold">Registration Successful!</span>
+                </div>
+              </div>
               
-              <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Thank you for registering your interest! We're excited to have you join our community of learners. 
-                We'll be in touch soon with updates about your AI-powered learning journey.
+              <p className="text-xl sm:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                🎉 <strong>You're all set!</strong> Thank you for joining our community of learners. 
+                We're excited to have you on board for your AI-powered learning journey.
               </p>
             </div>
 
-            {/* Additional Info */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-lg max-w-2xl mx-auto">
-              <h3 className="text-2xl font-semibold text-white mb-4">Benefits</h3>
-              <div className="space-y-4 text-left">
-                <div className="flex items-start">
-                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
-                    <span className="text-green-400 text-sm font-bold">1</span>
+            {/* Enhanced Benefits Section */}
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl p-10 border border-white/20 shadow-2xl max-w-4xl mx-auto">
+              <h3 className="text-3xl font-bold text-white mb-8">What's Next?</h3>
+              <div className="grid md:grid-cols-3 gap-8 text-left">
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-white text-sm font-bold">1</span>
+                    </div>
+                    <h4 className="text-xl font-semibold text-white">Personalized Learning</h4>
                   </div>
-                  <p className="text-gray-300">Personalized learning paths that adapt to your unique pace and learning style</p>
+                  <p className="text-gray-300 pl-12">AI-powered paths that adapt to your unique pace and learning style</p>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
-                    <span className="text-green-400 text-sm font-bold">2</span>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-white text-sm font-bold">2</span>
+                    </div>
+                    <h4 className="text-xl font-semibold text-white">Instant Feedback</h4>
                   </div>
-                  <p className="text-gray-300">Instant feedback and explanations to accelerate your understanding</p>
+                  <p className="text-gray-300 pl-12">Real-time explanations to accelerate your understanding</p>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mt-1 mr-4">
-                    <span className="text-green-400 text-sm font-bold">3</span>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-pink-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-white text-sm font-bold">3</span>
+                    </div>
+                    <h4 className="text-xl font-semibold text-white">24/7 AI Support</h4>
                   </div>
-                  <p className="text-gray-300">24/7 AI tutoring support whenever you need help with your studies</p>
+                  <p className="text-gray-300 pl-12">Always-available tutoring whenever you need help</p>
                 </div>
               </div>
             </div>
 
-            <button
-              onClick={handleBackToForm}
-              className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-white/10 rounded-lg hover:bg-white/20 transition-colors duration-200 border border-white/30"
-            >
-              ← Back to Home
-            </button>
+            {/* Call to Action */}
+            <div className="space-y-6">
+              <p className="text-lg text-gray-300">
+                We'll send you updates about Athira's launch and exclusive early access opportunities.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={handleBackToForm}
+                  className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-pink-500 to-orange-500 rounded-xl hover:from-pink-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  🏠 Back to Home
+                </button>
+                
+                <button
+                  onClick={() => window.open('https://twitter.com/athira_ai', '_blank')}
+                  className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-white/10 rounded-xl hover:bg-white/20 transition-all duration-300 border border-white/30 hover:border-white/50"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                  </svg>
+                  Follow Us
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         
-        {/* Footer */}
-        <footer className="py-6 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex justify-between items-center text-sm" style={{color: '#AAB0C5'}}>
-            <p>&copy; Athira, Inc. 2025</p>
-            <a 
-              href="/privacy-policy.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-white transition-colors duration-200"
-              style={{color: '#AAB0C5'}}
-            >
-              Privacy Policy
-            </a>
+        {/* Enhanced Footer */}
+        <footer className="py-8 px-4 sm:px-6 lg:px-8 mt-16">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm space-y-4 sm:space-y-0" style={{color: '#AAB0C5'}}>
+            <p>&copy; Athira, Inc. 2025 - Your AI Learning Companion</p>
+            <div className="flex space-x-6">
+              <a 
+                href="/privacy-policy.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors duration-200"
+                style={{color: '#AAB0C5'}}
+              >
+                Privacy Policy
+              </a>
+              <a 
+                href="mailto:hello@athira.ai"
+                className="hover:text-white transition-colors duration-200"
+                style={{color: '#AAB0C5'}}
+              >
+                Contact Us
+              </a>
+            </div>
           </div>
         </footer>
       </div>
