@@ -6,7 +6,8 @@ const LandingPage = () => {
     firstName: '',
     lastName: '',
     email: '',
-    description: ''
+    description: '',
+    interestedInTutoring: false
   })
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -14,10 +15,10 @@ const LandingPage = () => {
   const [submitError, setSubmitError] = useState('')
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }))
 
     // Clear errors when user starts typing
@@ -65,7 +66,8 @@ const LandingPage = () => {
           firstName: '',
           lastName: '',
           email: '',
-          description: ''
+          description: '',
+          interestedInTutoring: false
         })
       } else {
         console.error('❌ Submission failed:', result.error)
@@ -376,6 +378,24 @@ const LandingPage = () => {
                 </div>
               </div>
             )}
+
+            {/* Tutor Interest Checkbox */}
+            <div className="flex items-center mt-4">
+              <input
+                type="checkbox"
+                id="interestedInTutoring"
+                name="interestedInTutoring"
+                checked={formData.interestedInTutoring}
+                onChange={handleInputChange}
+                className="w-5 h-5 text-blue-600 bg-white border-2 border-white rounded focus:ring-blue-500 focus:ring-2 cursor-pointer"
+              />
+              <label 
+                htmlFor="interestedInTutoring" 
+                className="ml-3 text-base font-normal text-white cursor-pointer select-none"
+              >
+                Are you interested in becoming a Tutor?
+              </label>
+            </div>
 
             <button
               type="submit"

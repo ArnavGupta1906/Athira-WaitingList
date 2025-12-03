@@ -49,7 +49,8 @@ export const submitToGoogleSheets = async (registrationData) => {
           firstName: registrationData.firstName.trim(),
           lastName: registrationData.lastName.trim(),
           email: registrationData.email.trim().toLowerCase(),
-          description: registrationData.description?.trim() || ''
+          description: registrationData.description?.trim() || '',
+          interestedInTutoring: registrationData.interestedInTutoring ? 'Yes' : 'No'
         })
       });
       
@@ -84,7 +85,8 @@ export const submitToGoogleSheets = async (registrationData) => {
         firstName: registrationData.firstName.trim(),
         lastName: registrationData.lastName.trim(),
         email: registrationData.email.trim().toLowerCase(),
-        description: registrationData.description?.trim() || ''
+        description: registrationData.description?.trim() || '',
+        interestedInTutoring: registrationData.interestedInTutoring ? 'Yes' : 'No'
       })
     });
     
@@ -112,7 +114,8 @@ export const submitToGoogleSheets = async (registrationData) => {
           firstName: registrationData.firstName,
           lastName: registrationData.lastName,
           email: registrationData.email,
-          description: registrationData.description || ''
+          description: registrationData.description || '',
+          interestedInTutoring: registrationData.interestedInTutoring ? 'Yes' : 'No'
         });
         
         // Create a hidden form and submit it
@@ -198,6 +201,7 @@ export const submitViaBeacon = (registrationData) => {
     lastName: registrationData.lastName,
     email: registrationData.email,
     description: registrationData.description || '',
+    interestedInTutoring: registrationData.interestedInTutoring ? 'Yes' : 'No',
     timestamp: new Date().toISOString()
   });
   
