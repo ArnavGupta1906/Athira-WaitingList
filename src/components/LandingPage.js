@@ -233,8 +233,8 @@ const LandingPage = () => {
           </div>
 
           {/* Large Athira Branding */}
-          <div className="w-full px-4">
-            <h2 className="text-[8rem] sm:text-[10rem] md:text-[14rem] lg:text-[18rem] xl:text-[20rem] font-black text-white leading-none text-center uppercase" style={{
+          <div className="w-full overflow-hidden">
+            <h2 className="text-[4.5rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-black text-white leading-none text-center uppercase" style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               fontWeight: 900,
               letterSpacing: '-0.02em'
@@ -380,21 +380,24 @@ const LandingPage = () => {
             )}
 
             {/* Tutor Interest Checkbox */}
-            <div className="flex items-center mt-4">
-              <input
-                type="checkbox"
-                id="interestedInTutoring"
-                name="interestedInTutoring"
-                checked={formData.interestedInTutoring}
-                onChange={handleInputChange}
-                className="w-5 h-5 text-blue-600 bg-white border-2 border-white rounded focus:ring-blue-500 focus:ring-2 cursor-pointer"
-              />
-              <label 
-                htmlFor="interestedInTutoring" 
-                className="ml-3 text-base font-normal text-white cursor-pointer select-none"
-              >
-                Are you interested in becoming a Tutor?
-              </label>
+            <div className="mt-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="interestedInTutoring"
+                  name="interestedInTutoring"
+                  checked={formData.interestedInTutoring}
+                  onChange={handleInputChange}
+                  className="w-5 h-5 text-blue-600 bg-white border-2 border-white rounded focus:ring-blue-500 focus:ring-2 cursor-pointer"
+                />
+                <label 
+                  htmlFor="interestedInTutoring" 
+                  className="ml-3 text-base font-normal text-white cursor-pointer select-none"
+                >
+                  Are you interested in becoming a Tutor?
+                </label>
+              </div>
+              <p className="ml-8 mt-1 text-xs text-white/70">Need to be 18+</p>
             </div>
 
             <button
@@ -474,8 +477,8 @@ const LandingPage = () => {
           </div>
 
           {/* Large Athira Branding */}
-          <div className="w-full px-4">
-            <h2 className="text-[8rem] sm:text-[10rem] md:text-[14rem] lg:text-[18rem] xl:text-[20rem] font-black text-white leading-none text-center uppercase" style={{
+          <div className="w-full overflow-hidden">
+            <h2 className="text-[4.5rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-black text-white leading-none text-center uppercase" style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               fontWeight: 900,
               letterSpacing: '-0.02em'
